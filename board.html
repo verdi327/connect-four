@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/board.css" rel="stylesheet" />
+  </head>
+  <body ng-controller="ConnectFourController">
+    <div class="players">
+      <div class="player1">
+        <label><b>Player 1</b></label></br>
+        <input type="text" ng-model="players.player1"></input>
+      </div>
+
+      <div class="player2">
+        <label><b>Player 2</b></label></br>
+        <input type="text" ng-model="players.player2"></input>
+      </div>
+    </div>
+
+    <h1 class="title centered">Welcome To Connect Four</h1>
+
+    <div class="board centered">
+      <table table-bordered>
+        <tbody>
+          <tr ng-repeat="row in board">
+            <td class="position" ng-repeat="column in row" ng-click="addChip($index)">
+              <div class="circle filled-{{column.filled}}-{{column.player}}"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular.min.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="lib/underscore.js"></script>
+  </body>
+</html>

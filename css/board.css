@@ -1,0 +1,15 @@
+.title {margin-bottom:25px;}
+.centered {margin-left:28%}
+.board {width:42%; border:1px solid #fff;}
+table tbody tr td.position {padding:10px;}
+table tbody tr td.position .circle {padding:40px; background-color:#fff; border-radius:40px; cursor:pointer;}
+table tbody tr td.position .circle.filled-true-1 {background-color:#df691a}
+table tbody tr td.position .circle.filled-true-2 {background-color:#47a447}
+
+.players {float:left; margin-left:40px; margin-top:50px;}
+.players label { font-size:25px;}
+.player1 {margin-bottom:15px;}
+
+.player1 input {color:black;}
+.player2 input {color: black;}
+
