@@ -8,6 +8,34 @@ function ConnectFourController($scope) {
     [{filled: false, user:"", player: 0, row: 5}, {filled: false, user:"", player: 0, row: 5}, {filled: false, user:"", player: 0, row: 5}, {filled: false, user:"", player: 0, row: 5}, {filled: false, user:"", player: 0, row: 5}, {filled: false, user:"", player: 0, row: 5}, {filled: false, user:"", player: 0, row: 5}]
   ];
 
+  $scope.placeholders = [
+    {column: 0, visible: false, player: 0},
+    {column: 1, visible: false, player: 0},
+    {column: 2, visible: false, player: 0},
+    {column: 3, visible: false, player: 0},
+    {column: 4, visible: false, player: 0},
+    {column: 5, visible: false, player: 0},
+    {column: 6, visible: false, player: 0}
+  ];
+
+  $scope.showPlaceholder = function(column){
+    var user = determineUser();
+    angular.forEach($scope.placeholders, function(placeholder){
+      if (placeholder.column === column) {
+        placeholder.visible = true; placeholder.player = user.player
+      }
+    });
+  };
+
+  $scope.hidePlaceholder = function(column){
+    var user = determineUser();
+    angular.forEach($scope.placeholders, function(placeholder){
+      if (placeholder.column === column) {
+        placeholder.visible = false; placeholder.player = user.player
+      }
+    });
+  };
+
   var moveNumber = 1;
 
   $scope.players = {

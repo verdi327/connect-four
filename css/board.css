@@ -1,10 +1,15 @@
-.title {margin-bottom:85px;}
+.title {margin-bottom:0px;}
 .centered {margin-left:28%}
 .board {width:42%; border:1px solid #fff;}
+.hidden-placeholders {margin-left:469px}
 table tbody tr td.position {padding:10px;}
 table tbody tr td.position .circle {padding:40px; background-color:#fff; border-radius:40px; cursor:pointer;}
 table tbody tr td.position .circle.filled-true-1 {background-color:#df691a}
 table tbody tr td.position .circle.filled-true-2 {background-color:#47a447}
+
+table tbody tr td.position .circle.visible-false {background:#2b3e50}
+table tbody tr td.position .circle.visible-true.player-1 {background:#df691a}
+table tbody tr td.position .circle.visible-true.player-2 {background:#47a447}
 
 .players {float:left; margin-left:40px; margin-top:50px;}
 .players label { font-size:25px;}
