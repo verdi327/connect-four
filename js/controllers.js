@@ -50,24 +50,111 @@ function ConnectFourController($scope) {
     moveNumber += 1
   },
 
+  capitalize = function(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  },
+
   checkForWinner = function(lastMove) {
-    checkHorizontal(lastMove);
+    if ( checkHorizontal(lastMove) || checkVertical(lastMove) || checkRDiagonal(lastMove) || checkLDiagonal(lastMove)  ) {
+      alert("Big Ups " + capitalize(lastMove.user) + " on the win");
+      return true;
+    }
   },
 
   checkHorizontal = function(lastMove) {
-    var player = lastMove.player;
-    var oldBoard = $scope.board;
     var row = $scope.board[lastMove.row];
     var slices = each_cons(row, 4);
-    result = _.any(slices, function(slice){
-      return (slice[0].filled && slice[0].player === player) &&
-             (slice[1].filled && slice[1].player === player) &&
-             (slice[2].filled && slice[2].player === player) &&
-             (slice[3].filled && slice[3].player === player)
+    return fourConnected(slices, lastMove.player);
+  },
+
+  checkVertical = function(lastMove) {
+    var column = _.map($scope.board, function(row){
+      return row[lastMove.column];
     });
+    var slices = each_cons(column, 4);
+    return fourConnected(slices, lastMove.player);
+  },
 
-    console.log(result);
+  checkRDiagonal = function(lastMove) {
+    var upAndRight = [];
+    var downAndLeft = [];
+    var row = lastMove.row;
+    var column = lastMove.column;
 
+    // move diagonally up and to the right from the origin including the origin
+    do
+      {
+        try {valid = $scope.board[row][column];} catch (e) {valid = false}
+        upAndRight.push(valid);
+        row -= 1
+        column += 1
+      }
+    while(valid)
+
+    row = lastMove.row + 1;
+    column = lastMove.column - 1;
+
+    // move diagonally down and to the left not including the origin
+    do
+      {
+        try {valid = $scope.board[row][column];} catch (e) {valid = false}
+        downAndLeft.unshift(valid);
+        row += 1
+        column -= 1
+      }
+    while(valid)
+
+    upAndRight = _.compact(upAndRight);
+    downAndLeft = _.compact(downAndLeft);
+    var results = downAndLeft.concat(upAndRight);
+
+    var slices = each_cons(results, 4);
+    return fourConnected(slices, lastMove.player);
+  },
+
+  checkLDiagonal = function(lastMove) {
+    var upAndLeft = [];
+    var downAndRight = [];
+    var row = lastMove.row;
+    var column = lastMove.column;
+
+    // move diagonally up and to the left from the origin including the origin
+    do
+      {
+        try {valid = $scope.board[row][column];} catch (e) {valid = false}
+        upAndLeft.unshift(valid);
+        row -= 1
+        column -= 1
+      }
+    while(valid)
+
+    row = lastMove.row + 1;
+    column = lastMove.column + 1;
+
+    // move diagonally down and to the right not including the origin
+    do
+      {
+        try {valid = $scope.board[row][column];} catch (e) {valid = false}
+        downAndRight.push(valid);
+        row += 1
+        column += 1
+      }
+    while(valid)
+
+    upAndLeft = _.compact(upAndLeft);
+    downAndRight = _.compact(downAndRight);
+    var results = upAndLeft.concat(downAndRight);
+
+    var slices = each_cons(results, 4);
+    return fourConnected(slices, lastMove.player);
+  },
+
+  fourConnected = function(array, player){
+    return _.any(array, function(subArray){
+      return _.every(subArray, function(move){
+        return (move.filled && move.player === player);
+      });
+    });
   },
 
   each_cons = function(array, length) {
@@ -79,7 +166,7 @@ function ConnectFourController($scope) {
       }
     }
     return slices;
-  };
+  }
 
   // each_cons([1,2,3,4,5,6,7], 2); => [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
 
